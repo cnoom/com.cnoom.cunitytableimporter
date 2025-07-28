@@ -43,7 +43,7 @@ CUnityTableImporter提供了简单易用的工具，帮助Unity开发者快速�
 1. 打开Unity项目
 2. 打开Package Manager (菜单: Window > Package Manager)
 3. 点击"+"按钮，选择"Add package from git URL..."
-4. 输入: `https://github.com/cnoom/CUnityTableImporter.git`
+4. 输入: `https://github.com/cnoom/com.cnoom.cunitytableimporter.git`
 5. 点击"Add"按钮
 
 ### 手动安装
