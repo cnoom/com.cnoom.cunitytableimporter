@@ -11,7 +11,7 @@ namespace cnoom.Editor.TableImporter
     public static class ConvertHelper
     {
         // 类型名到 Type 的映射
-        private static readonly Dictionary<string, Type> typeMap = new Dictionary<string, Type>(StringComparer.OrdinalIgnoreCase)
+        private static readonly Dictionary<string, Type> TypeMap = new Dictionary<string, Type>(StringComparer.OrdinalIgnoreCase)
         {
             { "int", typeof(int) },
             { "float", typeof(float) },
@@ -37,7 +37,7 @@ namespace cnoom.Editor.TableImporter
         /// </summary>
         public static object ParseValue(string typeName, string value)
         {
-            if (!typeMap.TryGetValue(typeName, out Type type))
+            if (!TypeMap.TryGetValue(typeName, out Type type))
             {
                 Debug.LogWarning($"未知的类型：{typeName}");
                 return null;
@@ -53,6 +53,11 @@ namespace cnoom.Editor.TableImporter
                 Debug.LogWarning($"类型解析失败: {typeName} 值: {value}, 异常: {ex.Message}");
                 return null;
             }
+        }
+
+        public static void AddTypeToMap(string typeName, Type type)
+        {
+            TypeMap.Add(typeName, type);
         }
     }
     
