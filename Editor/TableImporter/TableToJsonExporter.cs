@@ -33,7 +33,10 @@ namespace cnoom.Editor.TableImporter
 
             Directory.CreateDirectory(outputPath);
             var json = JsonConvert.SerializeObject(list, Formatting.Indented);
-            File.WriteAllText(Path.Combine(outputPath, className + ".json"), json);
+            TextAsset textAsset = new TextAsset(json);
+            AssetDatabase.CreateAsset(textAsset, Path.Combine(outputPath, className + ".asset"));
+            
+            AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
             Debug.Log($"导出 {className} 到 {outputPath}");
         }

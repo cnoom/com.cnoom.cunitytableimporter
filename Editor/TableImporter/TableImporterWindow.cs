@@ -13,9 +13,9 @@ namespace cnoom.Editor.TableImporter
 
         private void OnEnable()
         {
-            _tablePath = PlayerPrefs.GetString(nameof(_tablePath), "Assets");
-            _classOutputPath = PlayerPrefs.GetString(nameof(_classOutputPath), "Assets");
-            _jsonOutputPath = PlayerPrefs.GetString(nameof(_jsonOutputPath), "Assets");
+            _tablePath = PlayerPrefs.GetString(nameof(_tablePath), _tablePath);
+            _classOutputPath = PlayerPrefs.GetString(nameof(_classOutputPath),_classOutputPath);
+            _jsonOutputPath = PlayerPrefs.GetString(nameof(_jsonOutputPath), _jsonOutputPath);
             InitClassName();
         }
 
