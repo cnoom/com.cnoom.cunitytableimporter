@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using UnityEditor;
 using UnityEngine;
 
@@ -98,6 +99,7 @@ namespace cnoom.Editor.TableImporter
         void OnClickJsonButton()
         {
             _jsonOutputPath = EditorUtility.OpenFolderPanel("选择文件夹", Application.dataPath, _jsonOutputPath);
+            _jsonOutputPath = GetRelativePath(_jsonOutputPath);
             PlayerPrefs.SetString(nameof(_jsonOutputPath), _jsonOutputPath);
         }
 
@@ -141,5 +143,39 @@ namespace cnoom.Editor.TableImporter
             }
             TableToJsonExporter.Export(_className, tableData.headers, tableData.types, tableData.rows, _jsonOutputPath);
         }
+        
+        private string GetRelativePath(string absolutePath)
+        {
+            // 获取 Application.dataPath 的绝对路径
+            string dataPath = Application.dataPath;
+
+            // 确保两个路径都以斜杠结尾
+            if (!dataPath.EndsWith(Path.DirectorySeparatorChar.ToString()))
+            {
+                dataPath += Path.DirectorySeparatorChar;
+            }
+            if (!absolutePath.EndsWith(Path.DirectorySeparatorChar.ToString()))
+            {
+                absolutePath += Path.DirectorySeparatorChar;
+            }
+
+            // 计算相对路径
+            Uri dataUri = new Uri(dataPath);
+            Uri absoluteUri = new Uri(absolutePath);
+            Uri relativeUri = dataUri.MakeRelativeUri(absoluteUri);
+
+            // 将 URI 转换为相对路径字符串
+            string relativePath = Uri.UnescapeDataString(relativeUri.ToString()).Replace('/', Path.DirectorySeparatorChar);
+
+            // 确保路径以 "Assets" 开头
+            if (relativePath.StartsWith("Assets") || relativePath.StartsWith("Assets" + Path.DirectorySeparatorChar))
+            {
+                return relativePath;
+            }
+
+            return "Assets" + Path.DirectorySeparatorChar + relativePath.TrimStart(Path.DirectorySeparatorChar);
+        }
+
+
     }
 }
